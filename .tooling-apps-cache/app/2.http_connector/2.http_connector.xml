@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="Basics" doc:id="de5bac58-d234-495a-9144-a16f3e965cd6" >
+		<http:listener doc:name="HTTP basics" doc:id="fafe5c38-3597-4e63-af7e-37f8a6fa405d" config-ref="HTTP_Listener_config" path="/basics/*" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Log Start" doc:id="e9f21e18-79f1-4743-ac60-69ed92ec4e45" message='#["log START - " ++ flow.name]' />
+		<set-payload value='#["this is the basic flow payload"]' doc:name="Set Payload" doc:id="1b80edf7-be2c-4a79-be3b-5a819739e1bb" />
+	</flow>
+	<flow name="queryParams" doc:id="9a17023e-0e83-4014-9bdd-54b291b2cf28" >
+		<http:listener doc:name="HTTP GET" doc:id="16c46ece-f717-48b5-b20d-7252af0aefc1" config-ref="HTTP_Listener_config" path="/queryParams" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Log START" doc:id="cca10841-17ff-4d8e-b05b-1e3a70f739bf" message='#["log START - " ++ flow.name]'/>
+		<set-payload value="#[%dw 2.0&#10;&#10;output application/json&#10;--- &#10;&#10;attributes.queryParams]" doc:name="Set Payload" doc:id="e1c51cdb-832c-4565-9185-316ca9c34db3" />
+	</flow>
+	<flow name="uriParams" doc:id="b984b2f8-e6b0-4849-9b06-3dddc6c4e51f" >
+		<http:listener doc:name="HTTP GET" doc:id="4b3a4174-6c11-49f9-90c2-d4ea74732985" config-ref="HTTP_Listener_config" path="/uriParams/{ID}" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Log START" doc:id="97221555-4a4f-4f58-9649-eedee279404e" message='#["Log START - " ++ flow.name]'/>
+		<set-payload value='#[attributes.uriParams."ID"]' doc:name="Set Payload" doc:id="7b1c4a7d-37e1-4d4a-83fd-5b11ed779343" />
+	</flow>
+</mule>
