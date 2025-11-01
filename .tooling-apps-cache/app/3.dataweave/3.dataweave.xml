@@ -495,7 +495,9 @@ var booksList = [
 
 output application/json
 ---
-"prices": booksList.book.*price[?($ > 1500)]]]></ee:set-payload>
+"prices": booksList.book.*price[?($ > 1500)]
+
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
