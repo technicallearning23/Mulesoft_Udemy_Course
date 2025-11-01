@@ -5,9 +5,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 	<flow name="Basics" doc:id="de5bac58-d234-495a-9144-a16f3e965cd6" >
-		<http:listener doc:name="HTTP basics" doc:id="fafe5c38-3597-4e63-af7e-37f8a6fa405d" config-ref="HTTP_Listener_config" path="/basics/*" allowedMethods="GET"/>
+		<http:listener doc:name="HTTP basics" doc:id="fafe5c38-3597-4e63-af7e-37f8a6fa405d" config-ref="HTTP_Listener_config" path="/basics/*" allowedMethods="GET">
+			<http:response >
+				<http:body ><![CDATA[#[vars.requestResponse]]]></http:body>
+			</http:response>
+		</http:listener>
 		<logger level="INFO" doc:name="Log Start" doc:id="e9f21e18-79f1-4743-ac60-69ed92ec4e45" message='#["log START - " ++ flow.name]' />
 		<set-payload value='#["this is the basic flow payload"]' doc:name="Set Payload" doc:id="1b80edf7-be2c-4a79-be3b-5a819739e1bb" />
+		<set-variable value='#[{&#10;    "param1": "value1",&#10;    "param2": "value2",&#10;    "param3": "value3"&#10;}]' doc:name="set query params" doc:id="4c91b3f9-7d96-4841-b728-fa1be7c19397" variableName="customMap"/>
+		<http:request method="GET" doc:name="Request" doc:id="e1d2f88a-c9a0-40ca-bb22-c38d5e562d23" config-ref="HTTP_Request_configuration" path="/queryParams" target="requestResponse">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+    ('K1': vars.customMap.param1) if (vars.customMap.param1 != null and vars.customMap.param1 != ''),
+    ('K2': vars.customMap.param2) if (vars.customMap.param2 != null and vars.customMap.param2 != ''),
+    ('K3': vars.customMap.param3) if (vars.customMap.param3 != null and vars.customMap.param3 != '')
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Log END" doc:id="c2d4df4a-dd33-4f50-9c3f-535b1fa0b380" message='#["log END - " ++ flow.name]'/>
 	</flow>
 	<flow name="queryParams" doc:id="9a17023e-0e83-4014-9bdd-54b291b2cf28" >
 		<http:listener doc:name="HTTP GET" doc:id="16c46ece-f717-48b5-b20d-7252af0aefc1" config-ref="HTTP_Listener_config" path="/queryParams" allowedMethods="GET"/>

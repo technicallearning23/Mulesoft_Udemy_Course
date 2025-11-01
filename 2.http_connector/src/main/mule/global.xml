@@ -7,4 +7,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="659a24a7-f1cd-480d-bcb5-0acc87097346" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="ae86e4b7-42b5-4d37-8e1a-e093a0490f06" responseTimeout="9000000">
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
 </mule>
