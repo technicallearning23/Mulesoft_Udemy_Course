@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+	<flow name="5.vm_connectorFlow" doc:id="4ba65541-9035-42ec-9b6f-06b1ede8f4fe" >
+		<http:listener doc:name="HTTP POST" doc:id="41534fb0-7e2b-4728-bc2f-26269fc47b7d" config-ref="HTTP_Listener_config" path="/async-basic"/>
+		<logger level="INFO" doc:name="LOG START" doc:id="3f612f4b-5c94-4975-aa41-d0ebc0900cdb" message='"before publish to queue"'/>
+		<vm:publish doc:name="Publish Queue to Async" doc:id="5539a889-fbb9-4cdb-8f12-fad04b49beae" />
+		<logger level="INFO" doc:name="LOG END" doc:id="c50a7694-173e-4b14-b8d3-98fe69394107" message='"after publish to queue"'/>
+	</flow>
+</mule>

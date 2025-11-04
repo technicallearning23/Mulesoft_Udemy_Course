@@ -1,6 +1,0 @@
-http:
-  host: "localhost"
-  port: "8081"
-  path: "/test1"
-  
-message: "yaml file used"
